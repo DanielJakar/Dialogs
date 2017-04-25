@@ -82,15 +82,25 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
 
     public void toppings(View view) {
 
-        String [] selected;
+        final ArrayList<String> selected = new ArrayList<>();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+
+        final String[] toppings = getResources().getStringArray(R.array.toppings);
+
 
         builder.setTitle("Choose your toppings");
         builder.setMultiChoiceItems(R.array.toppings, null, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                
+                String top = toppings[which];
+                if (isChecked){
+                    selected.add(top);
+                }
+                else {
+                    selected.remove(top);
+                }
 
             }
         });
