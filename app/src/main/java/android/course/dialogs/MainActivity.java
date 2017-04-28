@@ -14,6 +14,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DialogInterface.OnClickListener {
 
+    private String list = "You have selected the following toppings: " ;
+    private ArrayList<String> selected = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +59,10 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
                 break;
             case AlertDialog.BUTTON_NEGATIVE:
                 Toast.makeText(this, "Staying....", Toast.LENGTH_SHORT).show();
+                list = "You have selected the following toppings: " ;
+                break;
+            case AlertDialog.BUTTON_NEUTRAL:
+                Toast.makeText(this, list, Toast.LENGTH_SHORT).show();
                 break;
         }
 
@@ -64,9 +71,9 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
     public void showlistDialog(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        final String [] colors = {"Red", "Green", "Blue"};
+        final String [] colors = {"Extra Large", "Large", "Personal (single portion)"};
 
-        builder.setTitle("Pick a color");
+        builder.setTitle("Select Pizza Size:");
         builder.setIcon(R.mipmap.ic_launcher_round);
         builder.setItems(colors, new DialogInterface.OnClickListener(){
             @Override
@@ -82,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
 
     public void toppings(View view) {
 
-        final ArrayList<String> selected = new ArrayList<>();
+
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -97,13 +104,29 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
                 String top = toppings[which];
                 if (isChecked){
                     selected.add(top);
+
                 }
                 else {
                     selected.remove(top);
                 }
 
+
+
             }
         });
+
+
+
+
+
+
+        builder.setNegativeButton("Cancel", this);
+        builder.setNeutralButton("Save", this);
+
+
+
+        builder.show();
+
 
     }
 }
